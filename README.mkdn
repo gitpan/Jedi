@@ -1,0 +1,119 @@
+# NAME
+
+Jedi - Jedi Web Framework
+
+# VERSION
+
+version 0.01
+
+# DESCRIPTION
+
+Jedi is another Web Framework, build for easiness to maintain, easy to understand, and NO DSL !
+
+A Jedi script will plug in roads, any Jedi::App you want.
+
+Ex :
+
+    use Jedi;
+    my $jedi = Jedi->new
+
+    $jedi->road('/', 'MyApps');
+    $jedi->road('/admin', 'MyApps::Admin');
+
+    $jedi->start;
+
+Then your Jedi Apps look likes :
+
+	package MyApps;
+	use Jedi::Apps;
+
+	sub jedi_apps {
+		my ($jedi) = @_;
+
+		$jedi->get('/', $jedi->can('index'));
+		$jedi->get(qr{/env/.*}, $jedi->can('env'));
+	}
+
+	sub index {
+		my ($jedi, $request, $response) = @_;
+		$response->status(200);
+		$response->body('Hello World !');
+		return 1;
+	}
+
+	sub env {
+		my ($jedi, $request, $response) = @_;
+		my $env = substr($request->path, length("/env/"));
+		$response->status(200);
+		$response->body("The env : <$env>, has the value <". ($request->env->{$env} // "").">");
+		return 1;
+	}
+
+	1;
+
+You can also plug multiple time the same route or similar, the response will be fill by each routes.
+
+A route can check the status to see if another route has already do something. Same think for the body.
+
+You can for instance, create a role, with a before "jedi\_apps", that init or add body content, and you route, add more stuff.
+
+Or do an after, that add to the routes, additional content.
+
+This is just a start, more will come.
+
+# METHODS
+
+## road
+
+Add a based route to your Jedi Apps
+
+	$jedi->road('/', 'MyApps');
+	$jedi->road('/admin', 'MyApps::Admin');
+
+## response
+
+Check the road available based on the current request and call the appropriate Jedi::App module
+
+	my $response = $jedi->response(\%ENV);
+
+The response returned is a [Jedi::Response](http://search.cpan.org/perldoc?Jedi::Response), you can call the to\_psgi method to get the status / headers / body
+
+	my ($status, $headers, $body) = $response->to_psgi
+
+## start
+
+Start your jedi apps
+
+At the end of your Jedi script, call the start method.
+
+This feat the psgi format, and should be placed in your app.psgi script.
+
+	$jedi->start
+
+# SEE ALSO
+
+[Jedi::App](http://search.cpan.org/perldoc?Jedi::App)
+
+[Jedi::Request](http://search.cpan.org/perldoc?Jedi::Request)
+
+[Jedi::Response](http://search.cpan.org/perldoc?Jedi::Response)
+
+# BUGS
+
+Please report any bugs or feature requests on the bugtracker website
+https://tasks.celogeek.com/projects/perl-modules-jedi
+
+When submitting a bug or request, please include a test-file or a
+patch to an existing test-file that illustrates the bug or desired
+feature.
+
+# AUTHOR
+
+celogeek <me@celogeek.com>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by celogeek <me@celogeek.com>.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
