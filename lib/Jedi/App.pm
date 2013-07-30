@@ -13,7 +13,7 @@ package Jedi::App;
 use strict;
 use warnings;
 
-our $VERSION = '0.01';    # VERSION
+our $VERSION = '0.02';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -37,7 +37,7 @@ Jedi::App - Jedi App
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 DESCRIPTION
 
