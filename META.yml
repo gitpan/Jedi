@@ -33,6 +33,7 @@ requires:
   Module::Runtime: 0
   Moo: 0
   Moo::Role: 0
+  autobox: 0
   perl: 5.010
   strict: 0
   warnings: 0
@@ -40,7 +41,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-jedi
   homepage: https://tasks.celogeek.com/projects/perl-modules-jedi
   repository: https://github.com/celogeek/perl-jedi.git
-version: 0.02
+version: 0.03
 x_Dist_Zilla:
   perl:
     version: 5.018000
@@ -173,6 +174,14 @@ x_Dist_Zilla:
       class: Dist::Zilla::Plugin::MetaResourcesFromGit
       name: MetaResourcesFromGit
       version: 1.103620
+    -
+      class: Dist::Zilla::Plugin::Prereqs
+      config:
+        Dist::Zilla::Plugin::Prereqs:
+          phase: runtime
+          type: requires
+      name: Prereqs
+      version: 4.300035
     -
       class: Dist::Zilla::Plugin::FinderCode
       name: ':InstallModules'
