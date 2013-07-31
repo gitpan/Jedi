@@ -34,6 +34,7 @@
          "requires" : {
             "CGI::Cookie::XS" : "0",
             "CGI::Deurl::XS" : "0",
+            "CHI" : "0",
             "Carp" : "0",
             "HTTP::Body" : "0",
             "Import::Into" : "0",
@@ -74,7 +75,7 @@
          "web" : "https://github.com/celogeek/perl-jedi"
       }
    },
-   "version" : "0.04",
+   "version" : "0.05",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018000"

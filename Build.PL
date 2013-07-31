@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "Jedi",
-  "dist_version" => "0.04",
+  "dist_version" => "0.05",
   "license" => "perl",
   "module_name" => "Jedi",
   "recommends" => {},
@@ -25,6 +25,7 @@ my %module_build_args = (
   "requires" => {
     "CGI::Cookie::XS" => 0,
     "CGI::Deurl::XS" => 0,
+    "CHI" => 0,
     "Carp" => 0,
     "HTTP::Body" => 0,
     "Import::Into" => 0,
