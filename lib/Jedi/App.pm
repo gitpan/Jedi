@@ -13,7 +13,7 @@ package Jedi::App;
 use strict;
 use warnings;
 
-our $VERSION = '0.05';    # VERSION
+our $VERSION = '0.06';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -22,6 +22,7 @@ sub import {
     my $target = caller;
     use_module('Moo')->import::into($target);
     $target->can('with')->('Jedi::Role::App');
+    $target->can('with')->('Jedi::Role::Config');
     return;
 }
 
@@ -37,7 +38,7 @@ Jedi::App - Jedi App
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 
@@ -106,6 +107,27 @@ This module is equivalent into your package to :
 	package MyApps;
 	use Moo;
 	with "Jedi::Role::App";
+	with "Jedi::Role::Config";
+
+=head1 OTHER ATTRIBUTES
+
+=head2 jedi_config
+
+You can access to the config from your apps. Use the attribute "jedi_config".
+
+See L<Jedi::Role::Config> for more defails
+
+=head2 jedi_env
+
+You can access to the jedi_env config from your apps. Use the attribute "jedi_env".
+
+See L<Jedi::Role::Config> for more defails
+
+=head1 SEE ALSO
+
+L<Jedi::Role::App>
+
+L<Jedi::Role::Config>
 
 =head1 BUGS
 

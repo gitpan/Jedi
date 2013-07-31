@@ -12,7 +12,7 @@ package Jedi;
 
 use Moo;
 
-our $VERSION = '0.05';    # VERSION
+our $VERSION = '0.06';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -52,7 +52,6 @@ sub road {
 sub response {
     my ( $self, $env ) = @_;
 
-    my $jedi_env = $ENV{PLACK_ENV} // 'development';
     my $sorted_roads = $self->_jedi_roads;
     if ( !$self->_jedi_roads_is_sorted ) {
         $self->_jedi_roads_is_sorted(1);
@@ -67,9 +66,8 @@ sub response {
         my ( $road, $jedi ) = @$road_def;
         return $jedi->response(
             Jedi::Request->new(
-                jedi_env => $jedi_env,
-                env      => $env,
-                path     => $path_info->without_base($road)
+                env  => $env,
+                path => $path_info->without_base($road)
             ),
             $response
         );
@@ -81,9 +79,8 @@ sub response {
             $self->_jedi_roads_cache->set( $path_info => $road_def );
             return $jedi->response(
                 Jedi::Request->new(
-                    jedi_env => $jedi_env,
-                    env      => $env,
-                    path     => $path_info->without_base($road)
+                    env  => $env,
+                    path => $path_info->without_base($road)
                 ),
                 $response
             );
@@ -110,7 +107,7 @@ Jedi - Jedi Web Framework
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 

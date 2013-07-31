@@ -1,20 +1,21 @@
-building test distribution under .build/asgUhlV2Tr
+building test distribution under .build/jXxxwAbet5
 [DZ] beginning to build Jedi
 [DZ] guessing dist's main_module is lib/Jedi.pm
 [DZ] extracting distribution abstract from lib/Jedi.pm
 [@GRS/@Filter/ExtraTests] rewriting release test xt/release/unused-vars.t
 [@GRS/@Filter/ExtraTests] rewriting release test xt/release/pod-coverage.t
 [@GRS/@Filter/ExtraTests] rewriting author test xt/author/critic.t
-[DZ] writing Jedi in .build/asgUhlV2Tr
+[DZ] writing Jedi in .build/jXxxwAbet5
 Created MYMETA.yml and MYMETA.json
-Creating new 'Build' script for 'Jedi' version '0.05'
+Creating new 'Build' script for 'Jedi' version '0.06'
 Building Jedi
-t/00-compile.t ............ ok
+t/00-compile.t .................................. ok
 # Testing with Perl 5.018000, /home/gitlab_ci/perl5/perlbrew/perls/perl-5.18.0/bin/perl
 #     CGI::Cookie::XS version is 0.18
 #     CGI::Deurl::XS version is 0.07
 #     CHI version is 0.58
 #     Carp version is 1.29
+#     Config::Any version is 0.23
 #     File::Find version is 1.23
 #     File::Temp version is 0.23
 #     FindBin version is 1.51
@@ -26,6 +27,7 @@ t/00-compile.t ............ ok
 #     Module::Runtime version is 0.013
 #     Moo version is 1.003
 #     Moo::Role version is undefined
+#     Path::Class version is 0.32
 #     Plack::Test version is undefined
 #     Scalar::Util version is 1.27
 #     Slurp version is 0.4
@@ -34,34 +36,38 @@ t/00-compile.t ............ ok
 #     autobox version is 2.79
 #     strict version is 1.07
 #     warnings version is 1.18
-t/000-report-versions.t ... ok
-t/Jedi.t .................. ok
-t/Jedi/App.t .............. ok
-t/Jedi/Request.t .......... ok
-t/author-critic.t ......... ok
-t/release-pod-coverage.t .. ok
-t/release-unused-vars.t ... ok
+t/000-report-versions.t ......................... ok
+t/Jedi.t ........................................ ok
+t/Jedi/App.t .................................... ok
+t/Jedi/Config/Direct/direct.t ................... ok
+t/Jedi/Config/NoConf/noconf.t ................... ok
+t/Jedi/Config/SubDir/Sub1/Sub2/Sub3/indirect.t .. ok
+t/Jedi/Request.t ................................ ok
+t/author-critic.t ............................... ok
+t/release-pod-coverage.t ........................ ok
+t/release-unused-vars.t ......................... ok
 All tests successful.
-Files=8, Tests=144,  8 wallclock secs ( 0.04 usr  0.01 sys +  7.70 cusr  0.47 csys =  8.22 CPU)
+Files=11, Tests=172,  9 wallclock secs ( 0.05 usr  0.01 sys +  9.00 cusr  0.45 csys =  9.51 CPU)
 Result: PASS
 cover
-Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/asgUhlV2Tr/cover_db
+Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/jXxxwAbet5/cover_db
 
 
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 File                           stmt   bran   cond    sub    pod   time  total
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
-blib/lib/Jedi.pm               98.1  100.0  100.0  100.0  100.0   31.7   98.7
-blib/lib/Jedi/App.pm          100.0    n/a    n/a  100.0    n/a   14.8  100.0
-.../lib/Jedi/Helpers/Hash.pm  100.0    n/a    n/a  100.0  100.0   21.5  100.0
-...ib/Jedi/Helpers/Scalar.pm  100.0  100.0    n/a  100.0  100.0    9.4  100.0
-blib/lib/Jedi/Request.pm      100.0  100.0   88.9  100.0  100.0   13.9   97.6
-blib/lib/Jedi/Response.pm     100.0  100.0  100.0  100.0  100.0    1.8  100.0
-blib/lib/Jedi/Role/App.pm     100.0   95.8    n/a  100.0  100.0    6.9   99.0
-Total                          99.6   97.7   91.3  100.0  100.0  100.0   98.9
+blib/lib/Jedi.pm               98.1  100.0    n/a  100.0  100.0   18.0   98.7
+blib/lib/Jedi/App.pm          100.0    n/a    n/a  100.0    n/a   20.2  100.0
+.../lib/Jedi/Helpers/Hash.pm  100.0    n/a    n/a  100.0  100.0   14.6  100.0
+...ib/Jedi/Helpers/Scalar.pm  100.0  100.0    n/a  100.0  100.0    1.7  100.0
+blib/lib/Jedi/Request.pm      100.0  100.0   88.9  100.0  100.0   13.4   97.6
+blib/lib/Jedi/Response.pm     100.0  100.0  100.0  100.0  100.0   15.8  100.0
+blib/lib/Jedi/Role/App.pm     100.0   95.8    n/a  100.0  100.0    7.2   99.0
+blib/lib/Jedi/Role/Config.pm  100.0  100.0  100.0  100.0    n/a    9.0  100.0
+Total                          99.6   98.1   92.3  100.0  100.0  100.0   99.1
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 
-HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/asgUhlV2Tr/cover_db/coverage.html
+HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/jXxxwAbet5/cover_db/coverage.html
 done.
-leaving .build/asgUhlV2Tr intact
+leaving .build/jXxxwAbet5 intact

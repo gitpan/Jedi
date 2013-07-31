@@ -5,7 +5,6 @@ author:
 build_requires:
   File::Find: 0
   File::Temp: 0
-  FindBin: 0
   HTTP::Request::Common: 0
   JSON: 0
   Module::Build: 0.3601
@@ -29,11 +28,14 @@ requires:
   CGI::Deurl::XS: 0
   CHI: 0
   Carp: 0
+  Config::Any: 0
+  FindBin: 0
   HTTP::Body: 0
   Import::Into: 0
   Module::Runtime: 0
   Moo: 0
   Moo::Role: 0
+  Path::Class: 0
   autobox: 0
   perl: 5.010
   strict: 0
@@ -42,7 +44,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-jedi
   homepage: https://tasks.celogeek.com/projects/perl-modules-jedi
   repository: https://github.com/celogeek/perl-jedi.git
-version: 0.05
+version: 0.06
 x_Dist_Zilla:
   perl:
     version: 5.018000

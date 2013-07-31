@@ -12,13 +12,11 @@ package Jedi::Request;
 
 use Moo;
 
-our $VERSION = '0.05';    # VERSION
+our $VERSION = '0.06';    # VERSION
 
 use HTTP::Body;
 use CGI::Deurl::XS 'parse_query_string';
 use CGI::Cookie::XS;
-
-has 'jedi_env' => ( is => 'ro', default => sub {'development'} );
 
 has 'env' => ( is => 'ro', required => 1 );
 
@@ -120,7 +118,7 @@ Jedi::Request - Jedi Request
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 
@@ -129,10 +127,6 @@ This object is pass through the route, as a second params. (self, request, respo
 You can get data from it, to generate your response
 
 =head1 ATTRIBUTES
-
-=head2 jedi_env
-
-The environment of jedi apps
 
 =head2 env
 
