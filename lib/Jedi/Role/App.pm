@@ -12,7 +12,7 @@ package Jedi::Role::App;
 
 use Moo::Role;
 
-our $VERSION = '0.03';    # VERSION
+our $VERSION = '0.04';    # VERSION
 
 use Jedi::Helpers::Scalar;
 
@@ -100,7 +100,7 @@ Jedi::Role::App - Jedi App Role
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 DESCRIPTION
 

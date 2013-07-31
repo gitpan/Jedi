@@ -12,7 +12,7 @@ package Jedi::Request;
 
 use Moo;
 
-our $VERSION = '0.03';    # VERSION
+our $VERSION = '0.04';    # VERSION
 
 use HTTP::Body;
 use CGI::Deurl::XS 'parse_query_string';
@@ -76,6 +76,38 @@ sub _build__body {
 
     return $body;
 }
+
+sub scheme {
+    my ($self) = @_;
+    my $env = $self->env;
+
+    return
+           $env->{'X_FORWARDED_PROTOCOL'}
+        || $env->{'HTTP_X_FORWARDED_PROTOCOL'}
+        || $env->{'HTTP_X_FORWARDED_PROTO'}
+        || $env->{'HTTP_FORWARDED_PROTO'}
+        || $env->{'psgi.url_scheme'}
+        || $env->{'PSGI.URL_SCHEME'}
+        || '';
+}
+
+sub port {
+    my ($self) = @_;
+    my $env = $self->env;
+
+    return $env->{'SERVER_PORT'};
+}
+
+sub host {
+    my ($self) = @_;
+    my $env = $self->env;
+
+    return
+           $env->{'HTTP_X_FORWARDED_HOST'}
+        || $env->{'X_FORWARDED_HOST'}
+        || $env->{'HTTP_HOST'}
+        || '';
+}
 1;
 
 __END__
@@ -88,7 +120,7 @@ Jedi::Request - Jedi Request
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 DESCRIPTION
 
@@ -171,6 +203,20 @@ You receive:
 	a => [1,2,3]
 	b => [4,5,6]
 	c => [1]
+
+=head1 METHODS
+
+=head2 scheme
+
+Return the scheme from proxied proto or main proto
+
+=head2 port
+
+Return server port
+
+=head2 host
+
+Return the proxied host or the main host
 
 =head1 BUGS
 
