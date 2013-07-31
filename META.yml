@@ -44,7 +44,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-jedi
   homepage: https://tasks.celogeek.com/projects/perl-modules-jedi
   repository: https://github.com/celogeek/perl-jedi.git
-version: 0.06
+version: 0.07
 x_Dist_Zilla:
   perl:
     version: 5.018000

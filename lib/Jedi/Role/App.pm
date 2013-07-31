@@ -11,7 +11,7 @@ package Jedi::Role::App;
 # ABSTRACT: Jedi App Role
 
 use Moo::Role;
-our $VERSION = '0.06';    # VERSION
+our $VERSION = '0.07';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
@@ -117,7 +117,7 @@ Jedi::Role::App - Jedi App Role
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 DESCRIPTION
 

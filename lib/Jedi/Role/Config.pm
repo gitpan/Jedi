@@ -11,7 +11,7 @@ package Jedi::Role::Config;
 # ABSTRACT: Easy load of config file by env
 
 use Moo::Role;
-our $VERSION = '0.06';    # VERSION
+our $VERSION = '0.07';    # VERSION
 use Path::Class;
 use FindBin qw/$Bin/;
 use Config::Any;
@@ -28,7 +28,6 @@ sub _build_jedi_config {
     my ($self) = @_;
 
     my $env = $self->jedi_env;
-    FindBin::again();
 
     my $curdir    = dir($Bin);
     my $main_file = "config";
@@ -70,7 +69,7 @@ Jedi::Role::Config - Easy load of config file by env
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 DESCRIPTION
 
