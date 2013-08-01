@@ -1,13 +1,13 @@
-building test distribution under .build/S4cljY99qP
+building test distribution under .build/Dv7BEmc9_y
 [DZ] beginning to build Jedi
 [DZ] guessing dist's main_module is lib/Jedi.pm
 [DZ] extracting distribution abstract from lib/Jedi.pm
 [@GRS/@Filter/ExtraTests] rewriting release test xt/release/unused-vars.t
 [@GRS/@Filter/ExtraTests] rewriting release test xt/release/pod-coverage.t
 [@GRS/@Filter/ExtraTests] rewriting author test xt/author/critic.t
-[DZ] writing Jedi in .build/S4cljY99qP
+[DZ] writing Jedi in .build/Dv7BEmc9_y
 Created MYMETA.yml and MYMETA.json
-Creating new 'Build' script for 'Jedi' version '0.07'
+Creating new 'Build' script for 'Jedi' version '0.08'
 Building Jedi
 t/00-compile.t .................................. ok
 # Testing with Perl 5.018000, /home/gitlab_ci/perl5/perlbrew/perls/perl-5.18.0/bin/perl
@@ -47,27 +47,27 @@ t/author-critic.t ............................... ok
 t/release-pod-coverage.t ........................ ok
 t/release-unused-vars.t ......................... ok
 All tests successful.
-Files=11, Tests=172, 14 wallclock secs ( 0.07 usr  0.02 sys + 11.93 cusr  0.92 csys = 12.94 CPU)
+Files=11, Tests=194, 10 wallclock secs ( 0.05 usr  0.01 sys +  8.97 cusr  0.47 csys =  9.50 CPU)
 Result: PASS
 cover
-Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/S4cljY99qP/cover_db
+Reading database from /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/Dv7BEmc9_y/cover_db
 
 
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 File                           stmt   bran   cond    sub    pod   time  total
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
-blib/lib/Jedi.pm               98.1  100.0    n/a  100.0  100.0   17.6   98.7
-blib/lib/Jedi/App.pm          100.0    n/a    n/a  100.0    n/a   19.6  100.0
-.../lib/Jedi/Helpers/Hash.pm  100.0    n/a    n/a  100.0  100.0   12.1  100.0
-...ib/Jedi/Helpers/Scalar.pm  100.0  100.0    n/a  100.0  100.0   11.4  100.0
-blib/lib/Jedi/Request.pm      100.0  100.0   88.9  100.0  100.0   16.2   97.6
-blib/lib/Jedi/Response.pm     100.0  100.0  100.0  100.0  100.0    3.9  100.0
-blib/lib/Jedi/Role/App.pm     100.0   95.8    n/a  100.0  100.0    4.1   99.0
-blib/lib/Jedi/Role/Config.pm  100.0  100.0  100.0  100.0    n/a   15.0  100.0
-Total                          99.6   98.1   92.3  100.0  100.0  100.0   99.1
+blib/lib/Jedi.pm               98.1  100.0    n/a  100.0  100.0    9.9   98.7
+blib/lib/Jedi/App.pm          100.0    n/a    n/a  100.0    n/a   21.5  100.0
+.../lib/Jedi/Helpers/Hash.pm  100.0    n/a    n/a  100.0  100.0    7.7  100.0
+...ib/Jedi/Helpers/Scalar.pm  100.0  100.0    n/a  100.0  100.0   13.3  100.0
+blib/lib/Jedi/Request.pm      100.0  100.0   88.9  100.0  100.0   12.8   97.6
+blib/lib/Jedi/Response.pm     100.0  100.0  100.0  100.0  100.0   14.0  100.0
+blib/lib/Jedi/Role/App.pm     100.0   95.8    n/a  100.0  100.0    7.6   99.0
+blib/lib/Jedi/Role/Config.pm  100.0  100.0  100.0  100.0    n/a   13.4  100.0
+Total                          99.6   98.2   92.3  100.0  100.0  100.0   99.1
 ---------------------------- ------ ------ ------ ------ ------ ------ ------
 
 
-HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/S4cljY99qP/cover_db/coverage.html
+HTML output written to /home/gitlab_ci/repositories/celogeek/perl-modules-jedi/.build/Dv7BEmc9_y/cover_db/coverage.html
 done.
-leaving .build/S4cljY99qP intact
+leaving .build/Dv7BEmc9_y intact

@@ -11,20 +11,23 @@ package Jedi::Role::Config;
 # ABSTRACT: Easy load of config file by env
 
 use Moo::Role;
-our $VERSION = '0.07';    # VERSION
+our $VERSION = '0.08';    # VERSION
 use Path::Class;
 use FindBin qw/$Bin/;
 use Config::Any;
 
-has 'jedi_env' => ( is => 'lazy', clearer => 1 );
+has 'jedi_app_root' => ( is => 'lazy' );
 
-sub _build_jedi_env {
-    return $ENV{'JEDI_ENV'} // $ENV{'PLACK_ENV'} // 'development';
+sub _build_jedi_app_root {
+    my ($self) = @_;
+    my $config_files = $self->jedi_config_files->[0];
+
+    return defined $config_files ? file($config_files)->dir : dir($Bin);
 }
 
-has 'jedi_config' => ( is => 'lazy', clearer => 1 );
+has 'jedi_config_files' => ( is => 'lazy' );
 
-sub _build_jedi_config {
+sub _build_jedi_config_files {
     my ($self) = @_;
 
     my $env = $self->jedi_env;
@@ -45,10 +48,24 @@ sub _build_jedi_config {
         last if @files;
         $curdir = $curdir->parent;
     }
-    return {} if !@files;
+    return \@files;
+}
 
-    my $config
-        = Config::Any->load_files( { files => \@files, use_ext => 1 } );
+has 'jedi_env' => ( is => 'lazy', clearer => 1 );
+
+sub _build_jedi_env {
+    return $ENV{'JEDI_ENV'} // $ENV{'PLACK_ENV'} // 'development';
+}
+
+has 'jedi_config' => ( is => 'lazy', clearer => 1 );
+
+sub _build_jedi_config {
+    my ($self) = @_;
+
+    my $files = $self->jedi_config_files;
+    return {} if !@$files;
+
+    my $config = Config::Any->load_files( { files => $files, use_ext => 1 } );
     my $config_merged = {};
     for my $c ( map { values %$_ } @$config ) {
         %$config_merged = ( %$config_merged, %$c );
@@ -69,7 +86,7 @@ Jedi::Role::Config - Easy load of config file by env
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 DESCRIPTION
 
@@ -108,6 +125,18 @@ The jedi_config is set to :
    }
 
 =head1 ATTRIBUTES
+
+=head2 jedi_app_root
+
+This attribute set the root of your app based on the config files.
+
+It try to look for "config.*" or "environments/$jedi_env.*" and set the root app to this.
+
+If nothing found, the root app will be the current dir of the module.
+
+=head2 jedi_config_files
+
+The config files found based on the root apps
 
 =head2 jedi_env
 
