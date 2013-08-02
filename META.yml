@@ -36,6 +36,7 @@ requires:
   Moo: 0
   Moo::Role: 0
   Path::Class: 0
+  YAML::XS: 0
   autobox: 0
   perl: 5.010
   strict: 0
@@ -44,7 +45,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-jedi
   homepage: https://tasks.celogeek.com/projects/perl-modules-jedi
   repository: https://github.com/celogeek/perl-jedi.git
-version: 0.08
+version: 0.09
 x_Dist_Zilla:
   perl:
     version: 5.018000

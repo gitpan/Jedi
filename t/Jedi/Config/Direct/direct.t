@@ -23,12 +23,12 @@ use FindBin qw/$Bin/;
         conf   => 'dev',
         },
         'dev conf loaded';
-    is $direct->jedi_app_root, $Bin,
+    is $direct->jedi_app_root, dir($Bin),
         '... and the root app is at the same place';
     is_deeply $direct->jedi_config_files,
         [
-        file( $Bin, 'config.yml' ),
-        file( $Bin, 'environments', 'development.yml' )
+        file( dir($Bin), 'config.yml' ),
+        file( dir($Bin), 'environments', 'development.yml' )
         ],
         '... the conf found is correct';
 }
@@ -40,10 +40,11 @@ for my $env_name (qw/JEDI_ENV PLACK_ENV/) {
         my $direct = use_module('t::lib::Config::App')->new;
         is $direct->jedi_env, 'prod', 'env is now prod';
         is_deeply $direct->jedi_config, { direct => 1, }, 'prod conf loaded';
-        is $direct->jedi_app_root, $Bin,
+        is $direct->jedi_app_root, dir($Bin),
             '... and the root app is at the same place';
         is_deeply $direct->jedi_config_files,
-            [ file( $Bin, 'config.yml' ), ], '... the conf found is correct';
+            [ file( dir($Bin), 'config.yml' ), ],
+            '... the conf found is correct';
     }
 
     {
@@ -56,12 +57,12 @@ for my $env_name (qw/JEDI_ENV PLACK_ENV/) {
             conf   => 'test',
             },
             'test conf loaded';
-        is $direct->jedi_app_root, $Bin,
+        is $direct->jedi_app_root, dir($Bin),
             '... and the root app is at the same place';
         is_deeply $direct->jedi_config_files,
             [
-            file( $Bin, 'config.yml' ),
-            file( $Bin, 'environments', 'test.yml' )
+            file( dir($Bin), 'config.yml' ),
+            file( dir($Bin), 'environments', 'test.yml' )
             ],
             '... the conf found is correct';
     }

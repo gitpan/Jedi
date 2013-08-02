@@ -17,7 +17,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "Jedi",
-  "dist_version" => "0.08",
+  "dist_version" => "0.09",
   "license" => "perl",
   "module_name" => "Jedi",
   "recommends" => {},
@@ -35,6 +35,7 @@ my %module_build_args = (
     "Moo" => 0,
     "Moo::Role" => 0,
     "Path::Class" => 0,
+    "YAML::XS" => 0,
     "autobox" => 0,
     "perl" => "5.010",
     "strict" => 0,

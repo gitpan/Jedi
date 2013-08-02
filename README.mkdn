@@ -4,7 +4,7 @@ Jedi - Jedi Web Framework
 
 # VERSION
 
-version 0.08
+version 0.09
 
 # DESCRIPTION
 

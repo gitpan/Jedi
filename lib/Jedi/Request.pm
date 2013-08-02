@@ -12,7 +12,7 @@ package Jedi::Request;
 
 use Moo;
 
-our $VERSION = '0.08';    # VERSION
+our $VERSION = '0.09';    # VERSION
 
 use HTTP::Body;
 use CGI::Deurl::XS 'parse_query_string';
@@ -118,7 +118,7 @@ Jedi::Request - Jedi Request
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 DESCRIPTION
 
