@@ -13,16 +13,20 @@ package Jedi::App;
 use strict;
 use warnings;
 
-our $VERSION = '0.09';    # VERSION
+our $VERSION = '0.10';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
 
+use B::Hooks::EndOfScope;
+
 sub import {
     my $target = caller;
     use_module('Moo')->import::into($target);
-    $target->can('with')->('Jedi::Role::App');
-    $target->can('with')->('Jedi::Role::Config');
+    on_scope_end {
+        $target->can('with')->('Jedi::Role::App');
+        $target->can('with')->('Jedi::Role::Config');
+    };
     return;
 }
 
@@ -38,7 +42,7 @@ Jedi::App - Jedi App
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 DESCRIPTION
 
@@ -51,7 +55,7 @@ You can reused easily apps, like admin panel, or anything, and plug it into any 
 	use Jedi::App;
 	use JSON;
 
-	sub jedi_apps {
+	sub jedi_app {
 		my ($jedi) = @_;
 
 		$jedi->get('/', $jedi->can('index'));

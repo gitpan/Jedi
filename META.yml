@@ -24,6 +24,7 @@ meta-spec:
   version: 1.4
 name: Jedi
 requires:
+  B::Hooks::EndOfScope: 0
   CGI::Cookie::XS: 0
   CGI::Deurl::XS: 0
   CHI: 0
@@ -45,7 +46,7 @@ resources:
   bugtracker: https://tasks.celogeek.com/projects/perl-modules-jedi
   homepage: https://tasks.celogeek.com/projects/perl-modules-jedi
   repository: https://github.com/celogeek/perl-jedi.git
-version: 0.09
+version: 0.10
 x_Dist_Zilla:
   perl:
     version: 5.018000

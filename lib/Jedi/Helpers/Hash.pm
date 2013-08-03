@@ -13,7 +13,7 @@ package Jedi::Helpers::Hash;
 use strict;
 use warnings;
 
-our $VERSION = '0.09';    # VERSION
+our $VERSION = '0.10';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -47,7 +47,7 @@ Jedi::Helpers::Hash - Jedi Helpers for Hash
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 METHODS
 

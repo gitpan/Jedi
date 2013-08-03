@@ -11,10 +11,12 @@ package Jedi::Role::App;
 # ABSTRACT: Jedi App Role
 
 use Moo::Role;
-our $VERSION = '0.09';    # VERSION
+our $VERSION = '0.10';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
+
+requires 'jedi_app';
 
 has '_jedi_routes'  => ( is => 'ro', default => sub { {} } );
 has '_jedi_missing' => ( is => 'ro', default => sub { [] } );
@@ -117,7 +119,7 @@ Jedi::Role::App - Jedi App Role
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 DESCRIPTION
 
@@ -127,6 +129,8 @@ This role is to apply to your Moo module.
    with 'Jedi::Role::App';
 
 You should use the L<Jedi::App> module.
+
+You module need to defined the sub "jedi_app", the road will call it directly.
 
 =head1 METHODS
 

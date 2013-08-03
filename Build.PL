@@ -17,12 +17,13 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "Jedi",
-  "dist_version" => "0.09",
+  "dist_version" => "0.10",
   "license" => "perl",
   "module_name" => "Jedi",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "B::Hooks::EndOfScope" => 0,
     "CGI::Cookie::XS" => 0,
     "CGI::Deurl::XS" => 0,
     "CHI" => 0,
