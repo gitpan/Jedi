@@ -11,7 +11,7 @@ package Jedi::Role::Config;
 # ABSTRACT: Easy load of config file by env
 
 use Moo::Role;
-our $VERSION = '0.10';    # VERSION
+our $VERSION = '0.11';    # VERSION
 use Path::Class;
 use FindBin qw/$Bin/;
 use Config::Any;
@@ -37,7 +37,9 @@ sub _build_jedi_config_files {
     my $env_file  = "" . file( 'environments', $env );
 
     my @files;
-    while ( $curdir ne '/' ) {
+    my %look;
+    while ( !exists $look{$curdir} ) {
+        $look{$curdir} = 1;
         for my $ext ( Config::Any->extensions ) {
             my $full_main_file = file( $curdir, $main_file . '.' . $ext );
             my $full_env_file  = file( $curdir, $env_file . '.' . $ext );
@@ -86,7 +88,7 @@ Jedi::Role::Config - Easy load of config file by env
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 DESCRIPTION
 
