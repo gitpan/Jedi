@@ -12,7 +12,7 @@ package Jedi::Response;
 
 use Moo;
 
-our $VERSION = '0.11';    # VERSION
+our $VERSION = '0.13';    # VERSION
 
 use Jedi::Helpers::Hash;
 
@@ -60,7 +60,7 @@ Jedi::Response - Jedi Response
 
 =head1 VERSION
 
-version 0.11
+version 0.13
 
 =head1 DESCRIPTION
 

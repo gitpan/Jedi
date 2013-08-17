@@ -11,7 +11,7 @@ package Jedi::Role::App;
 # ABSTRACT: Jedi App Role
 
 use Moo::Role;
-our $VERSION = '0.11';    # VERSION
+our $VERSION = '0.13';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
@@ -74,11 +74,17 @@ sub missing {
 sub response {
     my ( $self, $request, $response ) = @_;
 
-    my $path   = $request->path;
-    my $routes = $self->_jedi_routes->{ $request->env->{REQUEST_METHOD} };
+    my $path = $request->path;
+
+    my $request_method = $request->env->{REQUEST_METHOD};
+    $request_method = 'GET' if $request_method eq 'HEAD';
+
+    my $routes = $self->_jedi_routes->{$request_method};
     my $methods;
 
-    if ( my $cache_routes = $self->_jedi_routes_cache->get($path) ) {
+    my $cache_key = $request_method . ':' . $path;
+
+    if ( my $cache_routes = $self->_jedi_routes_cache->get($cache_key) ) {
         $methods = $cache_routes;
     }
     else {
@@ -97,7 +103,7 @@ sub response {
 
         @$methods = @{ $self->_jedi_missing } if !scalar @$methods;
 
-        $self->_jedi_routes_cache->set( $path => $methods );
+        $self->_jedi_routes_cache->set( $cache_key => $methods );
     }
 
     for my $meth (@$methods) {
@@ -119,7 +125,7 @@ Jedi::Role::App - Jedi App Role
 
 =head1 VERSION
 
-version 0.11
+version 0.13
 
 =head1 DESCRIPTION
 
