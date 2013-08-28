@@ -12,7 +12,7 @@ package Jedi;
 
 use Moo;
 
-our $VERSION = '0.13';    # VERSION
+our $VERSION = '0.14';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -107,7 +107,7 @@ Jedi - Jedi Web Framework
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 DESCRIPTION
 
@@ -128,7 +128,7 @@ Ex :
 Then your Jedi Apps look likes :
 
 	package MyApps;
-	use Jedi::Apps;
+	use Jedi::App;
 
 	sub jedi_app {
 		my ($jedi) = @_;
@@ -200,8 +200,6 @@ L<Jedi::App>
 L<Jedi::Request>
 
 L<Jedi::Response>
-
-=cut
 
 =head1 BUGS
 

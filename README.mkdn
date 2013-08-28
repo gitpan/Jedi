@@ -4,7 +4,7 @@ Jedi - Jedi Web Framework
 
 # VERSION
 
-version 0.13
+version 0.14
 
 # DESCRIPTION
 
@@ -25,7 +25,7 @@ Ex :
 Then your Jedi Apps look likes :
 
 	package MyApps;
-	use Jedi::Apps;
+	use Jedi::App;
 
 	sub jedi_app {
 		my ($jedi) = @_;

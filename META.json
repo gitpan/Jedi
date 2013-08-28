@@ -4,7 +4,7 @@
       "celogeek <me@celogeek.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "Dist::Zilla version 4.300036, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -79,7 +79,7 @@
          "web" : "https://github.com/celogeek/perl-jedi"
       }
    },
-   "version" : "0.13",
+   "version" : "0.14",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018000"
@@ -88,67 +88,67 @@
          {
             "class" : "Dist::Zilla::Plugin::GatherDir",
             "name" : "@GRS/@Filter/GatherDir",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::PruneCruft",
             "name" : "@GRS/@Filter/PruneCruft",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ManifestSkip",
             "name" : "@GRS/@Filter/ManifestSkip",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaYAML",
             "name" : "@GRS/@Filter/MetaYAML",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::License",
             "name" : "@GRS/@Filter/License",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::Readme",
             "name" : "@GRS/@Filter/Readme",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ExtraTests",
             "name" : "@GRS/@Filter/ExtraTests",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ExecDir",
             "name" : "@GRS/@Filter/ExecDir",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ShareDir",
             "name" : "@GRS/@Filter/ShareDir",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::Manifest",
             "name" : "@GRS/@Filter/Manifest",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::TestRelease",
             "name" : "@GRS/@Filter/TestRelease",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ConfirmRelease",
             "name" : "@GRS/@Filter/ConfirmRelease",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ModuleBuild",
             "name" : "@GRS/ModuleBuild",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ReportVersions",
@@ -168,7 +168,7 @@
          {
             "class" : "Dist::Zilla::Plugin::AutoPrereqs",
             "name" : "@GRS/AutoPrereqs",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::Prereqs",
@@ -179,7 +179,7 @@
                }
             },
             "name" : "@GRS/Prereqs",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::MinimumPerl",
@@ -199,12 +199,12 @@
          {
             "class" : "Dist::Zilla::Plugin::PodCoverageTests",
             "name" : "@GRS/PodCoverageTests",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::PruneFiles",
             "name" : "@GRS/PruneFiles",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::ReadmeMarkdownFromPod",
@@ -214,7 +214,7 @@
          {
             "class" : "Dist::Zilla::Plugin::MetaJSON",
             "name" : "@GRS/MetaJSON",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::MetaResourcesFromGit",
@@ -224,7 +224,7 @@
          {
             "class" : "Dist::Zilla::Plugin::MetaConfig",
             "name" : "@GRS/MetaConfig",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::PodWeaver",
@@ -255,37 +255,37 @@
                }
             },
             "name" : "Prereqs",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":InstallModules",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":IncModules",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":TestFiles",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":ExecFiles",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":ShareFiles",
-            "version" : "4.300035"
+            "version" : "4.300036"
          },
          {
             "class" : "Dist::Zilla::Plugin::FinderCode",
             "name" : ":MainModule",
-            "version" : "4.300035"
+            "version" : "4.300036"
          }
       ],
       "zilla" : {
@@ -293,7 +293,7 @@
          "config" : {
             "is_trial" : "0"
          },
-         "version" : "4.300035"
+         "version" : "4.300036"
       }
    }
 }
