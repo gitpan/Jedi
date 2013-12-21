@@ -8,11 +8,11 @@
 #
 package Jedi;
 
-# ABSTRACT: Jedi Web Framework
+# ABSTRACT: Web App Framework
 
 use Moo;
 
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -22,6 +22,33 @@ use CHI;
 use Module::Runtime qw/use_module/;
 use Carp qw/croak/;
 
+# PUBLIC METHOD
+
+has 'config' => ( is => 'ro', default => sub { {} } );
+
+sub road {
+    my ( $self, $base_route, $module ) = @_;
+    $base_route = $base_route->full_path();
+
+    my $jedi = use_module($module)->new( jedi_config => $self->config );
+    croak "$module is not a jedi app" unless $jedi->does('Jedi::Role::App');
+
+    $jedi->jedi_app;
+
+    push( @{ $self->_jedi_roads }, [ $base_route => $jedi ] );
+    $self->_jedi_roads_is_sorted(0);
+    $self->_clear_jedi_roads_cache;
+    return;
+}
+
+sub start {
+    my ($self) = @_;
+    return sub { $self->_response(@_)->to_psgi };
+}
+
+# PRIVATE METHODS AND ATTRIBUTES
+
+# The roads is store when you register an app into a specific path
 has '_jedi_roads'           => ( is => 'ro', default => sub { [] } );
 has '_jedi_roads_is_sorted' => ( is => 'rw', default => sub {0} );
 has '_jedi_roads_cache' => ( is => 'lazy', clearer => 1 );
@@ -34,22 +61,10 @@ sub _build__jedi_roads_cache {
     );
 }
 
-sub road {
-    my ( $self, $base_route, $module ) = @_;
-    $base_route = $base_route->full_path();
-
-    my $jedi = use_module($module)->new();
-    croak "$module is not a jedi app" unless $jedi->does('Jedi::Role::App');
-
-    $jedi->jedi_app;
-
-    push( @{ $self->_jedi_roads }, [ $base_route => $jedi ] );
-    $self->_jedi_roads_is_sorted(0);
-    $self->_clear_jedi_roads_cache;
-    return;
-}
-
-sub response {
+# The response loop on all path, using the cache and return a response format
+# This response can be convert into a compatible psgi response
+# The method 'start' use that method directly.
+sub _response {
     my ( $self, $env ) = @_;
 
     my $sorted_roads = $self->_jedi_roads;
@@ -90,11 +105,6 @@ sub response {
     return Jedi::Response->new( status => 500, body => 'No road found !' );
 }
 
-sub start {
-    my ($self) = @_;
-    return sub { $self->response(@_)->to_psgi };
-}
-
 1;
 
 __END__
@@ -103,108 +113,229 @@ __END__
 
 =head1 NAME
 
-Jedi - Jedi Web Framework
+Jedi - Web App Framework
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 DESCRIPTION
 
-Jedi is another Web Framework, build for easiness to maintain, easy to understand, and NO DSL !
+Jedi is a web framework, easy to understand, without DSL !
 
-A Jedi script will plug in roads, any Jedi::App you want.
+In a galaxy, far far away, a misterious force is operating. Come on young Padawan, let me show you how to use that power wisely !
 
-Ex :
+=head1 SYNOPSIS
 
-   use Jedi;
-   my $jedi = Jedi->new
+An Jedi App is simple as a package in perl. You can initialize the app with the jedi launcher and a config file.
 
-   $jedi->road('/', 'MyApps');
-   $jedi->road('/admin', 'MyApps::Admin');
+When you include L<Jedi::App>, it will automatically import L<Moo> and the L<Jedi::Role::App> in your package.
 
-   $jedi->start;
+In MyApps.pm :
 
-Then your Jedi Apps look likes :
+ package MyApps;
+ use Jedi::App;
+ 
+ sub jedi_app {
+  my ($app) = @_;
+  $app->get('/', $app->can('index'));
+  $app->get('/config', $app->can('show_config'));
+  $app->get(qr{/env/.+}, $app->can('env'));
+ }
+ 
+ sub index {
+  my ($app, $request, $response) = @_;
+  $response->status(200);
+  $response->body('Hello World !');
+  return 1;
+ }
 
-	package MyApps;
-	use Jedi::App;
+ sub env {
+  my ($app, $request, $response) = @_;
+  # path return always a "/" at the end
+  # so /env/QUERY_STRING?a=1 => path = /env/QUERY_STRING/
+  my $env = substr($request->path, length("/env/"), -1); 
+  $response->status(200);
+  $response->body(
+      "The env : <$env>, has the value <" .
+      ($request->env->{$env} // "") . 
+    ">");
+  return 1;
+ }
 
-	sub jedi_app {
-		my ($jedi) = @_;
+ sub show_config {
+  my ($app, $request, $response) = @_;
+  $response->status(200);
+  $response->body($app->jedi_config->{MyApps}{foo});
+  return 1;
+ }
 
-		$jedi->get('/', $jedi->can('index'));
-		$jedi->get(qr{/env/.*}, $jedi->can('env'));
-	}
+ 1;
 
-	sub index {
-		my ($jedi, $request, $response) = @_;
-		$response->status(200);
-		$response->body('Hello World !');
-		return 1;
-	}
+In MyAdmin.pm :
 
-	sub env {
-		my ($jedi, $request, $response) = @_;
-		my $env = substr($request->path, length("/env/"));
-		$response->status(200);
-		$response->body("The env : <$env>, has the value <". ($request->env->{$env} // "").">");
-		return 1;
-	}
+ package MyAdmin;
+ use Jedi::App;
+ 
+ sub jedi_app {
+   my ($app) = @_;
+   $app->get('/', $app->can('index_admin'));
+ }
+ 
+ sub index_admin {
+  my ($app, $request, $response) = @_;
+  $response->status(200);
+  $response->body('Admin !');
+ }
+ 1
 
-	1;
+The you can create a lauching config app.yml :
 
-You can also plug multiple time the same route or similar, the response will be fill by each routes.
+ Jedi:
+   Roads:
+     MyApps: "/"
+     MyAdmin: "/admin"
+ Plack:
+   env: production
+   server: Starman
+ Starman:
+   workers: 2
+   port: 9999
+ MyApps:
+   foo: bar
 
-A route can check the status to see if another route has already do something. Same think for the body.
+To start your app :
 
-You can for instance, create a role, with a before "jedi_app", that init or add body content, and you route, add more stuff.
+ perl-jedi -c app.yml
 
-Or do an after, that add to the routes, additional content.
+And if you want to test your app with your package inside the 'lib' directory :
 
-This is just a start, more will come.
+ perl-jedi -Ilib -c app.yml
 
-=head1 METHODS
+You can try requests :
 
-=head2 road
+ curl http://localhost:9999/
+ # Hello World !
+ 
+ curl http://localhost:9999/config
+ # bar
+ 
+ curl http://localhost:9999/admin
+ # Admin !
 
-Add a based route to your Jedi Apps
+ curl http://localhost:9999/env/QUERY_STRING?a=1
+ # The env : <QUERY_STRING>, has the value <a=1>
 
-	$jedi->road('/', 'MyApps');
-	$jedi->road('/admin', 'MyApps::Admin');
+=head1 HOW TO LAUNCH YOUR APPS
 
-=head2 response
+The L<Jedi> engine is a simple perl module that will handle the request and dispatch them to all your apps.
 
-Check the road available based on the current request and call the appropriate Jedi::App module
+A L<Jedi::App> is plugged into the L<Jedi> engine by using the L<Jedi::Launcher> and a launch config file, or directly by using Jedi with Plack.
 
-	my $response = $jedi->response(\%ENV);
+=head2 WITH THE Jedi::Launcher
 
-The response returned is a L<Jedi::Response>, you can call the to_psgi method to get the status / headers / body
+This is the recommended method,
+because it will load you config files,
+merge them,
+init the L<Jedi> engine and start L<Plack::Runner> with your config.
 
-	my ($status, $headers, $body) = $response->to_psgi
+The launcher name is 'perl-jedi', and it take your configs as parameter :
 
-=head2 start
+ perl-jedi -c myGlobalConf.yml -c myConfForPlack.yml -c myEnvProd.yml
 
-Start your jedi apps
+All this config will be merge together to create a simple HASH.
 
-At the end of your Jedi script, call the start method.
+The config is composed of different parts, some of them for L<Jedi>, some of them for L<Plack::Runner> and others for your apps.
 
-This feat the psgi format, and should be placed in your app.psgi script.
+=head3 The part for L<Jedi>
 
-	$jedi->start
+ Jedi:
+   Roads:
+     Jedi::App::Blog: '/'
+     Jedi::App::BlogAlt: '/'
+     Jedi::App::Admin::Blog: '/admin'
 
-=head1 SEE ALSO
+It will load Jedi::App::Blog and Jedi::App::BlogAlt, and mount it into "/".
+And also load Jedi::App::Admin::Blog, and mount it into "/admin"
 
-L<Jedi::App>
+You can push severals roads here, and many modules can be used with the same road.
+If one app doesn't take the path, it could be handle by the next app.
 
-L<Jedi::Request>
+=head3 The part for L<Plack::Runner>
 
-L<Jedi::Response>
+  Plack:
+    env: production
+    server: Starman
+  Starman:
+    workers: 2
+    port: 9999
+
+The config is take in that order : L<Plack>, then read Plack / server and read the section for the server, here it is L<Starman>.
+
+Then all the config is converted for L<Plack::Runner> as arguments. You can take a look to L<plackup> for all possible options.
+
+=head3 The part for your app
+
+You will receive all the config, like a simple HASH into all your apps.
+And this will be exactly the same data.
+So technically you can create the config you want.
+
+But I advice for sharing purpose (if you release that on cpan), to use as a base key for your app, the name of your package :
+
+ Jedi::App::Blog:
+   template_dir: /var/www/blog
+ Jedi::App::BlogAlt:
+   template_dir: /var/www/blog/alt
+ Jedi::App::Admin::Blog:
+   defaultAdmin:
+     user: admin
+     password: admin
+
+So app can read and change the config of other apps on the fly. Also you can create plugin that can do that...
+
+For example, the L<Jedi::Plugin::Template>, will create a key PACKAGE/template_dir when it is used. So you can override that value to
+use another template.
+
+=head2 WITH Jedi AND plackup
+
+The above example is equivalent to :
+
+ plackup --env production --server Starman --workers 2 --port 9999 app.psgi
+
+And the app.psgi contain :
+
+ use Jedi;
+ my $jedi = Jedi->new(config => {%configToLoadYourSelfHere});
+ $jedi->road('/' => 'Jedi::App::Blog');
+ $jedi->road('/' => 'Jedi::App::BlogAlt');
+ $jedi->road('/admin' => 'Jedi::App::Admin::Blog');
+ $jedi->start;
+
+=head1 MANUALS
+
+=over
+
+=item * L<Jedi::Launcher>
+
+You have a good overview of the jedi launcher here. You can run :
+
+ perl-jedi --help
+ perl-jedi --man
+
+=item * L<Jedi::App>
+
+An L<Jedi::App> is a L<Moo> package that will be load by L<Jedi>.
+
+Each app declare a method 'jedi_app'. This method is called directly by L<Jedi> to initialize your app.
+
+This is the good place to declare your routes, and initialize your databases and any stuff you need.
+
+=back
 
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired

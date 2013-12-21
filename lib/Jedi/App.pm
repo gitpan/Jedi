@@ -8,12 +8,12 @@
 #
 package Jedi::App;
 
-# ABSTRACT: Jedi App
+# ABSTRACT: to define your application
 
 use strict;
 use warnings;
 
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -25,7 +25,6 @@ sub import {
     use_module('Moo')->import::into($target);
     on_scope_end {
         $target->can('with')->('Jedi::Role::App');
-        $target->can('with')->('Jedi::Role::Config');
     };
     return;
 }
@@ -38,105 +37,126 @@ __END__
 
 =head1 NAME
 
-Jedi::App - Jedi App
+Jedi::App - to define your application
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 DESCRIPTION
 
-This module allow you to define apps. Apps is plug above roads, and with receive the end of the path (without the road).
+A L<Jedi::App> is a L<Moo> class with a 'jedi_app' method. This method is call directly by L<Jedi> to mount your app in
+the required path.
 
-You can reused easily apps, like admin panel, or anything, and plug it into any based road you want.
+=head1 REQUIRED METHOD
 
-	package MyApps;
+=head2 jedi_app
 
-	use Jedi::App;
-	use JSON;
+This method is automatically called by L<Jedi> to initialize your app.
 
-	sub jedi_app {
-		my ($jedi) = @_;
+You have to define the relative route the app takes
 
-		$jedi->get('/', $jedi->can('index'));
-		$jedi->get('/env', $jedi->can('display_env'));
-		$jedi->get(qr{/aaa/}, $jedi->can('aaa'));
+ sub jedi_app {
+   my ($app) = @_;
+   $app->get('/' => sub {
+     my ($app, $request, $response) = @_;
+     # ...
+   });
+   $app->post('/signin', $app->can('route_signin')),
+ }
 
-		return;
-	}
+ sub route_signin {
+   my ($app, $request, $response) = @_;
+   # ...
+ }
 
-	sub index {
-		my ($jedi, $request, $response) = @_;
-		$response->status("200");
-		$response->body("Hello World !");
-		return 1;
-	}
+The return will decide if L<Jedi> need to continue to any other matching routes, or stop here.
 
-	sub display_env {
-		my ($jedi, $request, $response) = @_;
-		$response->status('200');
-		$response->body(to_json($request->env));
-		return 1;
-	}
+If the return is B<true>, the route continue.
 
-	sub aaa {
-		my ($jedi, $request, $response) = @_;
-		$response->status(200);
-		$response->body("AAA !");
-	}
+If the return is B<false>, the route stop here.
 
-	1;
+You can for instance :
 
-If this is plug with :
+ sub jedi_app {
+   my ($app) = @_;
+   $app->get(qr{.*}, $app->can("check_auth"));
+   $app->get('/', $app->can("handle_index"));
+ }
+ 
+ sub check_app{
+  my ($app, $request, $response) = @_;
+  # check auth
+  if (!$auth_ok) {
+    $response->status('302');
+    $response->set_header('Location', '/auth');
+    return 0;
+  }
+  return 1;
+ }
 
-	$jedi->road('/test');
+=head1 DEFINE YOUR ROUTES
 
-This will return :
+All routes will take ($app, $request, $response).
 
-	/test      # Hello World !
-	/test/     # Hello World !
-	/test/env  # JSON of env variables
-	/test/env/ # JSON of env variables
+=head2 get
 
-And also the regexp works
+Define a GET method.
 
-	/test/helloaaaworld # AAA !
+  $app->get("/", sub{...});
 
-=head1 METHODS
+=head2 post
 
-=head2 import
+Define a POST method.
 
-This module is equivalent into your package to :
+  $jedi->post("/", sub{...});
 
-	package MyApps;
-	use Moo;
-	with "Jedi::Role::App";
-	with "Jedi::Role::Config";
+=head2 put
 
-=head1 OTHER ATTRIBUTES
+Define a PUT method.
 
-=head2 jedi_config
+  $jedi->put("/", sub{...});
 
-You can access to the config from your apps. Use the attribute "jedi_config".
+=head2 del
 
-See L<Jedi::Role::Config> for more defails
+Define a DEL method.
 
-=head2 jedi_env
+  $jedi->del("/", sub{...});
 
-You can access to the jedi_env config from your apps. Use the attribute "jedi_env".
+=head2 missing
 
-See L<Jedi::Role::Config> for more defails
+If no route matches, all the missing method is executed.
 
-=head1 SEE ALSO
+  $jedi->missing(sub{...});
 
-L<Jedi::Role::App>
+=head1 CONFIG
 
-L<Jedi::Role::Config>
+The 'config' attribute of L<Jedi> is passed to all your apps.
+
+You can access to it with the 'jedi_config' attribute :
+
+ sub jedi_app {
+  my ($app) = @_;
+  my $admin_token = $app->jedi_config->{MyConf}{admin}{token};
+  # ... 
+ }
+
+=head1 THE REPONSE
+
+Each route will call your method with : ($app, $request, $response).
+
+'$app' is the 'self' of your package, a L<Jedi::App>
+
+'$request' is the request, a L<Jedi::Request>
+
+'$response' is the object you need to manipulate to prepare your response, a L<Jedi::Response>
+
+Checkout the documentation of each of them to get all the possibilities.
 
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired

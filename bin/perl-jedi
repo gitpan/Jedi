@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 #
 # This file is part of Jedi
 #
@@ -6,36 +7,16 @@
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
 #
-package Jedi::Helpers::Hash;
 
-# ABSTRACT: Jedi Helpers for Hash
+# PODNAME: jedi
+# ABSTRACT: Jedi App Launcher
 
 use strict;
 use warnings;
+our $VERSION = '1.000'; # VERSION
+use Jedi::Launcher;
 
-our $VERSION = '1.000';    # VERSION
-
-use Import::Into;
-use Module::Runtime qw/use_module/;
-
-sub import {
-    my $target = caller;
-    use_module('autobox')->import::into( $target, HASH => __PACKAGE__ );
-    return;
-}
-
-sub to_arrayref {
-    my ($headers) = @_;
-    my @res;
-    for my $k ( keys %$headers ) {
-        for my $v ( @{ $headers->{$k} } ) {
-            push @res, $k, $v;
-        }
-    }
-    return \@res;
-}
-
-1;
+Jedi::Launcher->new_with_options->run();
 
 __END__
 
@@ -43,38 +24,11 @@ __END__
 
 =head1 NAME
 
-Jedi::Helpers::Hash - Jedi Helpers for Hash
+jedi - Jedi App Launcher
 
 =head1 VERSION
 
 version 1.000
-
-=head1 METHODS
-
-=head2 import
-
-Equivalent in your module to :
-
-  use autobox HASH => Jedi::Helpers::Hash
-
-=head2 to_arrayref
-
-Transform an headers form into an arrayref
-
-Ex :
-
-	{
-		'X-Test' => [ "AAA" ],
-		'Set-Cookie' => ["T1=1", "T2=2"],
-	}
-
-become
-
-	[ 
-		"X-Test", "AAA",
-		"Set-Cookie", "T1=1",
-		"Set-Cookie", "T2=2",
-	]
 
 =head1 BUGS
 

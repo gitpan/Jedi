@@ -13,7 +13,7 @@ package Jedi::Helpers::Scalar;
 use strict;
 use warnings;
 
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -53,7 +53,7 @@ Jedi::Helpers::Scalar - Jedi Helpers for Scalar
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 METHODS
 
@@ -85,7 +85,7 @@ Remove from the path, the base pass in params :
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired

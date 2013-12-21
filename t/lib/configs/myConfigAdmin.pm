@@ -6,11 +6,19 @@
 # This is free software; you can redistribute it and/or modify it under
 # the same terms as the Perl 5 programming language system itself.
 #
-package t::lib::Config::App;
+package t::lib::configs::myConfigAdmin;
 use Jedi::App;
 
 sub jedi_app {
-
+    my ($app) = @_;
+    $app->get(
+        '/',
+        sub {
+            my ( $self, $request, $response ) = @_;
+            $response->status(200);
+            $response->body( $self->jedi_config->{ ref $self }{text} );
+        }
+    );
 }
 
 1;

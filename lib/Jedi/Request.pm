@@ -8,11 +8,11 @@
 #
 package Jedi::Request;
 
-# ABSTRACT: Jedi Request
+# ABSTRACT: Request object
 
 use Moo;
 
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 
 use HTTP::Body;
 use CGI::Deurl::XS 'parse_query_string';
@@ -55,26 +55,6 @@ sub _build_cookies {
     return CGI::Cookie::XS->parse( $self->env->{HTTP_COOKIE} // '' );
 }
 
-has '_body' => ( is => 'lazy' );
-
-sub _build__body {
-    my ($self) = @_;
-
-    my $type   = $self->env->{'CONTENT_TYPE'}   || '';
-    my $length = $self->env->{'CONTENT_LENGTH'} || 0;
-    my $io     = $self->env->{'psgi.input'};
-    my $body = HTTP::Body->new( $type, $length );
-    $body->cleanup(1);
-
-    while ($length) {
-        $io->read( my $buffer, ( $length < 8192 ) ? $length : 8192 );
-        $length -= length($buffer);
-        $body->add($buffer);
-    }
-
-    return $body;
-}
-
 sub scheme {
     my ($self) = @_;
     my $env = $self->env;
@@ -106,6 +86,29 @@ sub host {
         || $env->{'HTTP_HOST'}
         || '';
 }
+
+# PRIVATE
+
+has '_body' => ( is => 'lazy' );
+
+sub _build__body {
+    my ($self) = @_;
+
+    my $type   = $self->env->{'CONTENT_TYPE'}   || '';
+    my $length = $self->env->{'CONTENT_LENGTH'} || 0;
+    my $io     = $self->env->{'psgi.input'};
+    my $body = HTTP::Body->new( $type, $length );
+    $body->cleanup(1);
+
+    while ($length) {
+        $io->read( my $buffer, ( $length < 8192 ) ? $length : 8192 );
+        $length -= length($buffer);
+        $body->add($buffer);
+    }
+
+    return $body;
+}
+
 1;
 
 __END__
@@ -114,11 +117,11 @@ __END__
 
 =head1 NAME
 
-Jedi::Request - Jedi Request
+Jedi::Request - Request object
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 DESCRIPTION
 
@@ -130,7 +133,7 @@ You can get data from it, to generate your response
 
 =head2 env
 
-The environment variable, as it received from PSGI
+The environment variable, as it received from PSGI. This is a HASH.
 
 =head2 path
 
@@ -138,6 +141,10 @@ The end of the path_info, without the road.
 
 Ex:
 	road("/test"), route("/me") # so /test/me/ will give the path /me/
+
+The $ENV{PATH_INFO} is untouch, you can use that method to get the relative PATH.
+
+The path always end with '/'.
 
 =head2 params
 
@@ -155,9 +162,11 @@ Ex:
 
 You receive:
 
-	a => [1,2,3]
-	b => [4,5,6]
-	c => 1
+  {	
+   a => [1,2,3],
+   b => [4,5,6],
+   c => 1
+  }
 
 =head2 uploads
 
@@ -180,13 +189,13 @@ Ex with curl :
 
 	curl -F 'test@test.txt' http://localhost:5000/post
 
-You can read then the tempname file to get the content. When the request is sent back, the file is automatically removed.
+You can read the tempname file to get the content. When the request is sent back, the file is automatically removed.
 
 See <HTTP::Body> for more details.
 
 =head2 cookies
 
-Parse the HTTP_COOKIE, and return an Hash of array
+Parse the HTTP_COOKIE, and return an HASH of ARRAY
 
 Ex:
 
@@ -194,9 +203,11 @@ Ex:
 
 You receive:
 
-	a => [1,2,3]
-	b => [4,5,6]
+ {
+  a => [1,2,3],
+	b => [4,5,6],
 	c => [1]
+ }
 
 =head1 METHODS
 
@@ -215,7 +226,7 @@ Return the proxied host or the main host
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired

@@ -1,0 +1,19 @@
+perltidy version 20130922 log file on a darwin system, OLD_PERL_VERSION=5.018001
+Configuration and command line parameters for this run:
+-html -pre
+To find error messages search for 'WARNING' with your editor
+Line 1 implies starting-indentation-level = 0
+
+########################  WARNING  #########################
+1: perl-jedi --help
+             --^   
+found bareword where operator expected (previous token underlined)
+############################################################
+
+########################  WARNING  #########################
+2: perl-jedi --man
+             --^  
+found bareword where operator expected (previous token underlined)
+############################################################
+Suggest including 'use warnings;'
+Suggest including 'use strict;'

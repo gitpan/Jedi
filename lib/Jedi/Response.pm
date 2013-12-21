@@ -8,11 +8,11 @@
 #
 package Jedi::Response;
 
-# ABSTRACT: Jedi Response
+# ABSTRACT: response object
 
 use Moo;
 
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 
 use Jedi::Helpers::Hash;
 
@@ -56,11 +56,11 @@ __END__
 
 =head1 NAME
 
-Jedi::Response - Jedi Response
+Jedi::Response - response object
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 DESCRIPTION
 
@@ -72,32 +72,32 @@ This is the response you will have to fill from route to route.
 
 Status code, by default is 404 (not found).
 
-You can consult the HTTP status but here some common :
+You can consult the L<HTTP status|http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html> but here some common :
 
-	500: internal server error
-	404: route not found
-	405: access forbidden
-	204: no content
-	200: status ok, with content
-	302: redirect
-	301: permanent redirect
+ 500: internal server error
+ 404: route not found
+ 405: access forbidden
+ 204: no content
+ 200: status ok, with content
+ 302: redirect
+ 301: permanent redirect
 
 =head2 headers
 
 This contain the headers you will send with your response.
 
-You should use the method set_header and push_header instead of filling this attribute directly.
+You should use the method L</set_header> and L</push_header> instead of filling this attribute directly.
 
 The attribute has this form :
 
-	key => [val1, val2 ...],
-	key2 => [val4],
+ key => [val1, val2 ...],
+ key2 => [val4],
 
 =head2 body
 
 The body is the string return to the browser.
 
-	$response->body("Hello World !");
+ $response->body("Hello World !");
 
 =head1 METHODS
 
@@ -105,20 +105,20 @@ The body is the string return to the browser.
 
 Set an header to a specific value.
 
-	$response->set_header('X-AUTH', $token);
-	$response->set_header('Location', 'http://blog.celogeek.com');
+ $response->set_header('X-AUTH', $token);
+ $response->set_header('Location', 'http://blog.celogeek.com');
 
 =head2 push_header
 
 Push an header to a specific value
 
-	$response->push_header('Set-Cookie', 'myCookie=a');
-	$response->push_header('Set-Cookie', 'myCookie2=b');
+ $response->push_header('Set-Cookie', 'myCookie=a');
+ $response->push_header('Set-Cookie', 'myCookie2=b');
 
 You will see :
 
-	Set-Cookie: myCookie=a
-	Set-Cookie: myCookie=b
+ Set-Cookie: myCookie=a
+ Set-Cookie: myCookie=b
 
 =head2 to_psgi
 
@@ -129,7 +129,7 @@ It is use by Jedi to transform the response into a valid psgi response.
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired

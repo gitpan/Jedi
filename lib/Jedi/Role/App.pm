@@ -8,15 +8,19 @@
 #
 package Jedi::Role::App;
 
-# ABSTRACT: Jedi App Role
+# ABSTRACT: imported role for Jedi::App
 
 use Moo::Role;
-our $VERSION = '0.14';    # VERSION
+our $VERSION = '1.000';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
 
+# REQUIRED
+
 requires 'jedi_app';
+
+# INTERNAL ATTRIBUTES
 
 has '_jedi_routes'  => ( is => 'ro', default => sub { {} } );
 has '_jedi_missing' => ( is => 'ro', default => sub { [] } );
@@ -41,6 +45,12 @@ sub _jedi_routes_push {
     $self->_clear_jedi_routes_cache;
     return;
 }
+
+# ATTRIBUTES
+
+has 'jedi_config' => ( is => 'ro', default => sub { {} } );
+
+# PUBLIC METHODS
 
 sub get {
     my ( $self, $path, $sub ) = @_;
@@ -121,90 +131,20 @@ __END__
 
 =head1 NAME
 
-Jedi::Role::App - Jedi App Role
+Jedi::Role::App - imported role for Jedi::App
 
 =head1 VERSION
 
-version 0.14
+version 1.000
 
 =head1 DESCRIPTION
 
-This role is to apply to your Moo module.
-
-   use Moo;
-   with 'Jedi::Role::App';
-
-You should use the L<Jedi::App> module.
-
-You module need to defined the sub "jedi_app", the road will call it directly.
-
-=head1 METHODS
-
-=head2 get
-
-Define a GET method.
-
-	$jedi->get("/", sub{...});
-
-=head2 post
-
-Define a POST method.
-
-	$jedi->post("/", sub{...});
-
-=head2 put
-
-Define a PUT method.
-
-	$jedi->put("/", sub{...});
-
-=head2 del
-
-Define a DEL method.
-
-	$jedi->del("/", sub{...});
-
-=head2 missing
-
-If no route matches, all the missing method is executed.
-
-	$jedi->missing(sub{...});
-
-=head2 response
-
-This will solve the route, and run all the method found.
-
-If none is found, we run all the missing methods.
-
-The route continue until a "false" response it sent. That should always mean an error.
-
-	$jedi->response($request, $response);
-
-=head1 ROUTES
-
-=head2 GET/POST/PUT/DELETE
-
-All the methods, take a route, and a sub.
-
-The route can be a scalar (exact match) or a regexp.
-
-The sub take L<Jedi::App>, a L<Jedi::Request> and a L<Jedi::Response>.
-
-Each sub should fill the Response based on the Request.
-
-The return code should be "1" if everything goes fine, to let other matching route to apply their changes.
-
-If the return is "0" or undef (false), the route stop and return the response.
-
-You should only use the bad return if something goes wrong.
-
-You can have multiple time the same route catch (thought regexp, and exact match). Each one receive a response, and pass this
-response to the next sub.
+Look the L<Jedi::App> for documentation.
 
 =head1 BUGS
 
 Please report any bugs or feature requests on the bugtracker website
-https://tasks.celogeek.com/projects/perl-modules-jedi
+https://github.com/celogeek/perl-jedi/issues
 
 When submitting a bug or request, please include a test-file or a
 patch to an existing test-file that illustrates the bug or desired
