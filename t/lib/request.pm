@@ -27,6 +27,8 @@ sub jedi_app {
     $jedi->get( '/scheme', $jedi->can('handle_scheme') );
     $jedi->get( '/host',   $jedi->can('handle_host') );
     $jedi->get( '/port',   $jedi->can('handle_port') );
+
+    $jedi->get( '/ip', $jedi->can('handle_remote_addr') );
 }
 
 sub handle_params {
@@ -78,4 +80,10 @@ sub handle_port {
     return 1;
 }
 
+sub handle_remote_addr {
+    my ( $jedi, $request, $response ) = @_;
+    $response->status(200);
+    $response->body( $request->remote_address );
+    return 1;
+}
 1;
