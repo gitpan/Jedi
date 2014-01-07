@@ -11,7 +11,7 @@ package Jedi::Role::App;
 # ABSTRACT: imported role for Jedi::App
 
 use Moo::Role;
-our $VERSION = '1.002';    # VERSION
+our $VERSION = '1.003';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
@@ -135,7 +135,7 @@ Jedi::Role::App - imported role for Jedi::App
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 DESCRIPTION
 

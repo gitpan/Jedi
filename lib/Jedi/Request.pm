@@ -12,7 +12,7 @@ package Jedi::Request;
 
 use strict;
 use warnings;
-our $VERSION = '1.002';    # VERSION
+our $VERSION = '1.003';    # VERSION
 
 # USE
 use HTTP::Body;
@@ -178,7 +178,7 @@ Jedi::Request - Request object
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 DESCRIPTION
 

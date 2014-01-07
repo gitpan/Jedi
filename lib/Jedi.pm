@@ -12,7 +12,7 @@ package Jedi;
 
 use Moo;
 
-our $VERSION = '1.002';    # VERSION
+our $VERSION = '1.003';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -117,13 +117,13 @@ Jedi - Web App Framework
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 DESCRIPTION
 
 Jedi is a web framework, easy to understand, without DSL !
 
-In a galaxy, far far away, a misterious force is operating. Come on young Padawan, let me show you how to use that power wisely !
+In a galaxy, far far away, a mysterious force is operating. Come on young Padawan, let me show you how to use that power wisely !
 
 =head1 SYNOPSIS
 

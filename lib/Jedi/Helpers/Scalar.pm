@@ -13,7 +13,7 @@ package Jedi::Helpers::Scalar;
 use strict;
 use warnings;
 
-our $VERSION = '1.002';    # VERSION
+our $VERSION = '1.003';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -53,7 +53,7 @@ Jedi::Helpers::Scalar - Jedi Helpers for Scalar
 
 =head1 VERSION
 
-version 1.002
+version 1.003
 
 =head1 METHODS
 

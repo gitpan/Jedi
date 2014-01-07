@@ -4,26 +4,25 @@ Jedi - Web App Framework
 
 # VERSION
 
-version 1.002
+version 1.003
 
 # DESCRIPTION
 
 Jedi is a web framework, easy to understand, without DSL !
 
-In a galaxy, far far away, a misterious force is operating. Come on young Padawan, let me show you how to use that power wisely !
+In a galaxy, far far away, a mysterious force is operating. Come on young Padawan, let me show you how to use that power wisely !
 
 # SYNOPSIS
 
 An Jedi App is simple as a package in perl. You can initialize the app with the jedi launcher and a config file.
 
-When you include [Jedi::App](http://search.cpan.org/perldoc?Jedi::App), it will automatically import [Moo](http://search.cpan.org/perldoc?Moo) and the [Jedi::Role::App](http://search.cpan.org/perldoc?Jedi::Role::App) in your package.
+When you include [Jedi::App](https://metacpan.org/pod/Jedi::App), it will automatically import [Moo](https://metacpan.org/pod/Moo) and the [Jedi::Role::App](https://metacpan.org/pod/Jedi::Role::App) in your package.
 
 In MyApps.pm :
 
     package MyApps;
     use Jedi::App;
     
-
     sub jedi_app {
      my ($app) = @_;
      $app->get('/', $app->can('index'));
@@ -31,7 +30,6 @@ In MyApps.pm :
      $app->get(qr{/env/.+}, $app->can('env'));
     }
     
-
     sub index {
      my ($app, $request, $response) = @_;
      $response->status(200);
@@ -66,13 +64,11 @@ In MyAdmin.pm :
     package MyAdmin;
     use Jedi::App;
     
-
     sub jedi_app {
       my ($app) = @_;
       $app->get('/', $app->can('index_admin'));
     }
     
-
     sub index_admin {
      my ($app, $request, $response) = @_;
      $response->status(200);
@@ -108,11 +104,9 @@ You can try requests :
     curl http://localhost:9999/
     # Hello World !
     
-
     curl http://localhost:9999/config
     # bar
     
-
     curl http://localhost:9999/admin
     # Admin !
 
@@ -121,16 +115,16 @@ You can try requests :
 
 # HOW TO LAUNCH YOUR APPS
 
-The [Jedi](http://search.cpan.org/perldoc?Jedi) engine is a simple perl module that will handle the request and dispatch them to all your apps.
+The [Jedi](https://metacpan.org/pod/Jedi) engine is a simple perl module that will handle the request and dispatch them to all your apps.
 
-A [Jedi::App](http://search.cpan.org/perldoc?Jedi::App) is plugged into the [Jedi](http://search.cpan.org/perldoc?Jedi) engine by using the [Jedi::Launcher](http://search.cpan.org/perldoc?Jedi::Launcher) and a launch config file, or directly by using Jedi with Plack.
+A [Jedi::App](https://metacpan.org/pod/Jedi::App) is plugged into the [Jedi](https://metacpan.org/pod/Jedi) engine by using the [Jedi::Launcher](https://metacpan.org/pod/Jedi::Launcher) and a launch config file, or directly by using Jedi with Plack.
 
 ## WITH THE Jedi::Launcher
 
 This is the recommended method,
 because it will load you config files,
 merge them,
-init the [Jedi](http://search.cpan.org/perldoc?Jedi) engine and start [Plack::Runner](http://search.cpan.org/perldoc?Plack::Runner) with your config.
+init the [Jedi](https://metacpan.org/pod/Jedi) engine and start [Plack::Runner](https://metacpan.org/pod/Plack::Runner) with your config.
 
 The launcher name is 'perl-jedi', and it take your configs as parameter :
 
@@ -138,9 +132,9 @@ The launcher name is 'perl-jedi', and it take your configs as parameter :
 
 All this config will be merge together to create a simple HASH.
 
-The config is composed of different parts, some of them for [Jedi](http://search.cpan.org/perldoc?Jedi), some of them for [Plack::Runner](http://search.cpan.org/perldoc?Plack::Runner) and others for your apps.
+The config is composed of different parts, some of them for [Jedi](https://metacpan.org/pod/Jedi), some of them for [Plack::Runner](https://metacpan.org/pod/Plack::Runner) and others for your apps.
 
-### The part for [Jedi](http://search.cpan.org/perldoc?Jedi)
+### The part for [Jedi](https://metacpan.org/pod/Jedi)
 
     Jedi:
       Roads:
@@ -154,7 +148,7 @@ And also load Jedi::App::Admin::Blog, and mount it into "/admin"
 You can push severals roads here, and many modules can be used with the same road.
 If one app doesn't take the path, it could be handle by the next app.
 
-### The part for [Plack::Runner](http://search.cpan.org/perldoc?Plack::Runner)
+### The part for [Plack::Runner](https://metacpan.org/pod/Plack::Runner)
 
     Plack:
       env: production
@@ -163,9 +157,9 @@ If one app doesn't take the path, it could be handle by the next app.
       workers: 2
       port: 9999
 
-The config is take in that order : [Plack](http://search.cpan.org/perldoc?Plack), then read Plack / server and read the section for the server, here it is [Starman](http://search.cpan.org/perldoc?Starman).
+The config is take in that order : [Plack](https://metacpan.org/pod/Plack), then read Plack / server and read the section for the server, here it is [Starman](https://metacpan.org/pod/Starman).
 
-Then all the config is converted for [Plack::Runner](http://search.cpan.org/perldoc?Plack::Runner) as arguments. You can take a look to [plackup](http://search.cpan.org/perldoc?plackup) for all possible options.
+Then all the config is converted for [Plack::Runner](https://metacpan.org/pod/Plack::Runner) as arguments. You can take a look to [plackup](https://metacpan.org/pod/plackup) for all possible options.
 
 ### The part for your app
 
@@ -186,7 +180,7 @@ But I advice for sharing purpose (if you release that on cpan), to use as a base
 
 So app can read and change the config of other apps on the fly. Also you can create plugin that can do that...
 
-For example, the [Jedi::Plugin::Template](http://search.cpan.org/perldoc?Jedi::Plugin::Template), will create a key PACKAGE/template\_dir when it is used. So you can override that value to
+For example, the [Jedi::Plugin::Template](https://metacpan.org/pod/Jedi::Plugin::Template), will create a key PACKAGE/template\_dir when it is used. So you can override that value to
 use another template.
 
 ## WITH Jedi AND plackup
@@ -206,18 +200,18 @@ And the app.psgi contain :
 
 # MANUALS
 
-- [Jedi::Launcher](http://search.cpan.org/perldoc?Jedi::Launcher)
+- [Jedi::Launcher](https://metacpan.org/pod/Jedi::Launcher)
 
     You have a good overview of the jedi launcher here. You can run :
 
         perl-jedi --help
         perl-jedi --man
 
-- [Jedi::App](http://search.cpan.org/perldoc?Jedi::App)
+- [Jedi::App](https://metacpan.org/pod/Jedi::App)
 
-    An [Jedi::App](http://search.cpan.org/perldoc?Jedi::App) is a [Moo](http://search.cpan.org/perldoc?Moo) package that will be load by [Jedi](http://search.cpan.org/perldoc?Jedi).
+    An [Jedi::App](https://metacpan.org/pod/Jedi::App) is a [Moo](https://metacpan.org/pod/Moo) package that will be load by [Jedi](https://metacpan.org/pod/Jedi).
 
-    Each app declare a method 'jedi\_app'. This method is called directly by [Jedi](http://search.cpan.org/perldoc?Jedi) to initialize your app.
+    Each app declare a method 'jedi\_app'. This method is called directly by [Jedi](https://metacpan.org/pod/Jedi) to initialize your app.
 
     This is the good place to declare your routes, and initialize your databases and any stuff you need.
 
