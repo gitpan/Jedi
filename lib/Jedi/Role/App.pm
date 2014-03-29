@@ -11,7 +11,7 @@ package Jedi::Role::App;
 # ABSTRACT: imported role for Jedi::App
 
 use Moo::Role;
-our $VERSION = '1.003';    # VERSION
+our $VERSION = '1.004';    # VERSION
 use Jedi::Helpers::Scalar;
 use CHI;
 use Carp qw/carp croak/;
@@ -49,6 +49,7 @@ sub _jedi_routes_push {
 # ATTRIBUTES
 
 has 'jedi_config' => ( is => 'ro', default => sub { {} } );
+has 'jedi_base_route' => ( is => 'ro' );
 
 # PUBLIC METHODS
 
@@ -135,7 +136,7 @@ Jedi::Role::App - imported role for Jedi::App
 
 =head1 VERSION
 
-version 1.003
+version 1.004
 
 =head1 DESCRIPTION
 

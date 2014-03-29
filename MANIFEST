@@ -20,6 +20,7 @@ t/00-compile.t
 t/000-report-versions.t
 t/Jedi.t
 t/Jedi/App.t
+t/Jedi/BaseRoute.t
 t/Jedi/Launcher.t
 t/Jedi/Request.t
 t/author-critic.t
@@ -33,6 +34,7 @@ t/lib/BadRoute/BadSub.pm
 t/lib/advanced.pm
 t/lib/badapp.pm
 t/lib/base.pm
+t/lib/baseroute.pm
 t/lib/config.pm
 t/lib/configs/myConfigAdmin.pm
 t/lib/configs/myConfigRoot.pm

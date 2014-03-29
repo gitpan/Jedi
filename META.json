@@ -78,10 +78,10 @@
          "web" : "https://github.com/celogeek/perl-jedi"
       }
    },
-   "version" : "1.003",
+   "version" : "1.004",
    "x_Dist_Zilla" : {
       "perl" : {
-         "version" : "5.018001"
+         "version" : "5.018002"
       },
       "plugins" : [
          {
