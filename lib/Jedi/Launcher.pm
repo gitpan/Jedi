@@ -11,7 +11,7 @@ package Jedi::Launcher;
 # ABSTRACT: Launcher for Jedi App
 
 use Moo;
-our $VERSION = '1.005';    # VERSION
+our $VERSION = '1.006';    # VERSION
 use MooX::Options
     authors  => ['Celogeek <me@celogeek.com>'],
     synopsis => <<'__EOF__'
@@ -148,7 +148,7 @@ Jedi::Launcher - Launcher for Jedi App
 
 =head1 VERSION
 
-version 1.005
+version 1.006
 
 =head1 DESCRIPTION
 

@@ -4,7 +4,7 @@ Jedi - Web App Framework
 
 # VERSION
 
-version 1.005
+version 1.006
 
 # DESCRIPTION
 

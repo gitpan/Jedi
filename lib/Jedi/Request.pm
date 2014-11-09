@@ -12,7 +12,7 @@ package Jedi::Request;
 
 use strict;
 use warnings;
-our $VERSION = '1.005';    # VERSION
+our $VERSION = '1.006';    # VERSION
 
 # USE
 use HTTP::Body;
@@ -136,20 +136,27 @@ sub _build_remote_address_str {
     return $real_ip->ip();
 }
 
+has 'base_url' => ( is => 'lazy' );
+
+sub _build_base_url {
+    my ($self)   = @_;
+    my $base_url = $self->scheme . '://' . $self->host;
+    my $port     = ':' . $self->port;
+    if ( $self->scheme eq 'http' && $port eq ':80' ) {
+        $port = '';
+    }
+    if ( $self->scheme eq 'https' && $port eq ':443' ) {
+        $port = '';
+    }
+    $base_url .= $port;
+
+    return $base_url;
+}
 has 'url' => ( is => 'lazy' );
 
 sub _build_url {
     my ($self) = @_;
-    my $url    = $self->scheme . '://' . $self->host;
-    my $port   = $self->port;
-    if ( $self->scheme eq 'http' && $port ne '80' ) {
-        $url .= ':' . $port;
-    }
-    if ( $self->scheme eq 'https' && $port ne '443' ) {
-        $url .= ':' . $port;
-    }
-    $url .= $self->env->{PATH_INFO} // '';
-    return $url;
+    return $self->base_url . ( $self->env->{PATH_INFO} // '/' );
 }
 
 # PRIVATE
@@ -186,7 +193,7 @@ Jedi::Request - Request object
 
 =head1 VERSION
 
-version 1.005
+version 1.006
 
 =head1 DESCRIPTION
 
@@ -285,6 +292,10 @@ Return the int version of the real_ip
 =head2 remote_address_str
 
 Return the str version of the real_ip
+
+=head2 base_url
+
+Return the path path of the URL, without the params
 
 =head2 url
 

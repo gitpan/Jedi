@@ -12,7 +12,7 @@ package Jedi;
 
 use Moo;
 
-our $VERSION = '1.005';    # VERSION
+our $VERSION = '1.006';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -129,7 +129,7 @@ Jedi - Web App Framework
 
 =head1 VERSION
 
-version 1.005
+version 1.006
 
 =head1 DESCRIPTION
 
