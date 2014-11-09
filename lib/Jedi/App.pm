@@ -13,7 +13,7 @@ package Jedi::App;
 use strict;
 use warnings;
 
-our $VERSION = '1.004';    # VERSION
+our $VERSION = '1.005';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -41,7 +41,7 @@ Jedi::App - to define your application
 
 =head1 VERSION
 
-version 1.004
+version 1.005
 
 =head1 DESCRIPTION
 
@@ -139,6 +139,15 @@ You can access to it with the 'jedi_config' attribute :
   my ($app) = @_;
   my $admin_token = $app->jedi_config->{MyConf}{admin}{token};
   # ... 
+ }
+
+=head1 SERVER HOST IP
+
+To get the server host ip, use the method 'jedi_host_ip' :
+
+ sub jedi_app {
+  my ($app) = @_;
+  say "Server Host IP : ", $app->jedi_host_ip;
  }
 
 =head1 THE REPONSE

@@ -12,7 +12,7 @@ package Jedi;
 
 use Moo;
 
-our $VERSION = '1.004';    # VERSION
+our $VERSION = '1.005';    # VERSION
 
 use Jedi::Helpers::Scalar;
 use Jedi::Request;
@@ -21,17 +21,28 @@ use CHI;
 
 use Module::Runtime qw/use_module/;
 use Carp qw/croak/;
+use Sys::HostIP;
 
 # PUBLIC METHOD
 
 has 'config' => ( is => 'ro', default => sub { {} } );
+has 'host_ip' => (
+    is      => 'ro',
+    lazy    => 1,
+    default => sub {
+        return Sys::HostIP->new->ip() // '127.0.0.1';
+    }
+);
 
 sub road {
     my ( $self, $base_route, $module ) = @_;
     $base_route = $base_route->full_path();
 
-    my $jedi = use_module($module)
-        ->new( jedi_config => $self->config, jedi_base_route => $base_route );
+    my $jedi = use_module($module)->new(
+        jedi_config     => $self->config,
+        jedi_base_route => $base_route,
+        jedi_host_ip    => $self->host_ip
+    );
     croak "$module is not a jedi app" unless $jedi->does('Jedi::Role::App');
 
     $jedi->jedi_app;
@@ -118,7 +129,7 @@ Jedi - Web App Framework
 
 =head1 VERSION
 
-version 1.004
+version 1.005
 
 =head1 DESCRIPTION
 
