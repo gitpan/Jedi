@@ -13,7 +13,7 @@ package Jedi::App;
 use strict;
 use warnings;
 
-our $VERSION = '1.006';    # VERSION
+our $VERSION = '1.007';    # VERSION
 
 use Import::Into;
 use Module::Runtime qw/use_module/;
@@ -41,7 +41,7 @@ Jedi::App - to define your application
 
 =head1 VERSION
 
-version 1.006
+version 1.007
 
 =head1 DESCRIPTION
 

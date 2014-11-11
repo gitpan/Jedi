@@ -27,7 +27,7 @@ my %module_build_args = (
     "celogeek <me\@celogeek.com>"
   ],
   "dist_name" => "Jedi",
-  "dist_version" => "1.006",
+  "dist_version" => "1.007",
   "license" => "perl",
   "module_name" => "Jedi",
   "recommends" => {},

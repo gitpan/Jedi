@@ -269,50 +269,57 @@ test_psgi $jedi->start, sub {
     my @tests = (
         [   {   'PSGI.URL_SCHEME' => 'http',
                 'HTTP_HOST'       => 'test.com',
-                'SERVER_PORT'     => '80',
                 'PATH_INFO'       => '/test/ok',
             },
+            'test.com',
+            80,
             'http://test.com',
             'http://test.com/test/ok'
         ],
         [   {   'PSGI.URL_SCHEME' => 'http',
-                'HTTP_HOST'       => 'test.com',
-                'SERVER_PORT'     => '123',
+                'HTTP_HOST'       => 'test.com:123',
                 'PATH_INFO'       => '/test/ok',
             },
+            'test.com',
+            123,
             'http://test.com:123',
             'http://test.com:123/test/ok'
         ],
         [   {   'PSGI.URL_SCHEME' => 'https',
                 'HTTP_HOST'       => 'test.com',
-                'SERVER_PORT'     => '443',
                 'PATH_INFO'       => '/test/ok',
             },
+            'test.com',
+            443,
             'https://test.com',
             'https://test.com/test/ok'
         ],
         [   {   'PSGI.URL_SCHEME' => 'https',
-                'HTTP_HOST'       => 'test.com',
-                'SERVER_PORT'     => '123',
+                'HTTP_HOST'       => 'test.com:123',
                 'PATH_INFO'       => '/test/ok',
             },
+            'test.com',
+            123,
             'https://test.com:123',
             'https://test.com:123/test/ok'
         ],
         [   {   'PSGI.URL_SCHEME' => 'ftp',
                 'HTTP_HOST'       => 'test.com',
-                'SERVER_PORT'     => '21',
                 'PATH_INFO'       => '/test/ok',
             },
-            'ftp://test.com:21',
-            'ftp://test.com:21/test/ok'
+            'test.com',
+            '',
+            'ftp://test.com',
+            'ftp://test.com/test/ok'
         ],
     );
     for my $test (@tests) {
-        my ( $env, $base_url, $url ) = @$test;
+        my ( $env, $host, $port, $base_url, $url ) = @$test;
         my $req = Jedi::Request->new( env => $env, path => '/' );
-        is $req->base_url, $base_url, "Base: " . $base_url . ' ok';
-        is $req->url,      $url,      "Url: " . $url . ' ok';
+        is $req->host,     $host,     'Host: ' . $host . ' ok ';
+        is $req->port,     $port,     'Port: ' . $port . ' ok ';
+        is $req->base_url, $base_url, 'Base: ' . $base_url . ' ok';
+        is $req->url,      $url,      'Url: ' . $url . ' ok';
     }
 }
 

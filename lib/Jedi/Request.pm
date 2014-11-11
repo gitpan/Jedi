@@ -12,7 +12,7 @@ package Jedi::Request;
 
 use strict;
 use warnings;
-our $VERSION = '1.006';    # VERSION
+our $VERSION = '1.007';    # VERSION
 
 # USE
 use HTTP::Body;
@@ -60,7 +60,9 @@ sub _build_cookies {
     return CGI::Cookie::XS->parse( $self->env->{HTTP_COOKIE} // '' );
 }
 
-sub scheme {
+has 'scheme' => ( is => 'lazy' );
+
+sub _build_scheme {
     my ($self) = @_;
     my $env = $self->env;
 
@@ -74,14 +76,9 @@ sub scheme {
         || '';
 }
 
-sub port {
-    my ($self) = @_;
-    my $env = $self->env;
+has 'base_host' => ( is => 'lazy' );
 
-    return $env->{'SERVER_PORT'};
-}
-
-sub host {
+sub _build_base_host {
     my ($self) = @_;
     my $env = $self->env;
 
@@ -90,6 +87,25 @@ sub host {
         || $env->{'X_FORWARDED_HOST'}
         || $env->{'HTTP_HOST'}
         || '';
+}
+
+has 'port' => ( is => 'lazy' );
+
+sub _build_port {
+    my ($self) = @_;
+    my ( $host, $port ) = split( /:/, $self->base_host );
+    return $port if defined $port;
+    return 80    if $self->scheme eq 'http';
+    return 443   if $self->scheme eq 'https';
+    return '';
+}
+
+has 'host' => ( is => 'lazy' );
+
+sub _build_host {
+    my ($self) = @_;
+    my ( $host, $port ) = split( /:/, $self->base_host );
+    return $host;
 }
 
 has 'real_ip' => ( is => 'lazy' );
@@ -139,18 +155,8 @@ sub _build_remote_address_str {
 has 'base_url' => ( is => 'lazy' );
 
 sub _build_base_url {
-    my ($self)   = @_;
-    my $base_url = $self->scheme . '://' . $self->host;
-    my $port     = ':' . $self->port;
-    if ( $self->scheme eq 'http' && $port eq ':80' ) {
-        $port = '';
-    }
-    if ( $self->scheme eq 'https' && $port eq ':443' ) {
-        $port = '';
-    }
-    $base_url .= $port;
-
-    return $base_url;
+    my ($self) = @_;
+    return $self->scheme . '://' . $self->base_host;
 }
 has 'url' => ( is => 'lazy' );
 
@@ -193,7 +199,7 @@ Jedi::Request - Request object
 
 =head1 VERSION
 
-version 1.006
+version 1.007
 
 =head1 DESCRIPTION
 
@@ -307,13 +313,19 @@ Return the full path of the URL, without the params
 
 Return the scheme from proxied proto or main proto
 
+=head2 base_host
+
+Return the host:port proxied or real
+
 =head2 port
 
-Return server port
+Return the port part of the base_host
+
+If no port found, it will return the default port based on scheme
 
 =head2 host
 
-Return the proxied host or the main host
+Return the host part of the base_host
 
 =head1 BUGS
 
